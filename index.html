@@ -4,9 +4,9 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Ленивые вычисления</title>
+        <title>Почему вам не стоит использовать Haskell для вашего следующего проекта</title>
 
-        <meta name="description" content="Доклад о ленивых вычислениях на РИФ-Воронеж, 11 сентября 2015 года.">
+        <meta name="description" content="Провокационный доклад про ужасный Haskell на Youcon, Саратов, 8 октября 2016 года.">
         <meta name="author" content="Денис Шевченко">
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
         <link rel="stylesheet" href="static/css/reveal.css">
-        <link rel="stylesheet" href="static/css/theme/solarized.css" id="theme">
+        <link rel="stylesheet" href="static/css/theme/white.css" id="theme">
         <link rel="stylesheet" href="static/css/own.css">
         <link rel="stylesheet" href="static/font-awesome/css/font-awesome.min.css">
 
@@ -41,528 +41,146 @@
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides" style="text-align: left !important;">
                 <section>
-                    <h1><span style="padding-left: 6px;"></span>Зачем нужен<br/>
-                        Haskell:</h1>
-                    <span style="font-size: 78px; color: #ff3c26; padding-left: 12px;">ленивые вычисления</span>
+                    <div class="tag">
+                        &lt;страшная-правда&gt;
+                    </div>
+                    <div class="first">
+                        <h2>
+                            Почему вам <span class="exclamation">не</span> стоит<br/>
+                            использовать Haskell<br/>
+                            <span style="font-size: 48px;">для вашего следующего проекта</span>
+                        </h2>
+                    </div>
+                    <div class="tag">
+                        &lt;/страшная-правда&gt;
+                    </div>
                 </section>
 
-                <!-- Концептуальная цитата -->
-                <!--
                 <section>
                     <div class="intro-quote">
-                        <span style="color: #ccc;"><i class="fa fa-quote-right"></i></span>&nbsp;&nbsp;Лучше<br/>
-                        <span style="padding-left: 111px;">ничем не заниматься,</span><br/>
-                        <span style="padding-left: 113px;"></span> чем заниматься ничем.
+                        &laquo;<span class="quote-separator"></span>Haskell очаровывает своими<br/>
+                        математическими концепциями<br/>
+                        и абсолютно неприменим<br/>
+                        в реальной работе.<span class="quote-separator"></span>&raquo; 
                     </div>
-                    <div class="medium-text" style="color: #777 !important; text-align: left; padding-left: 157px; font-size: 44px !important;">Тацит</div>
-                </section>
-                -->
-
-                <section data-background="#336B87">
-                    <h2 class="part-conception-title">В начале было&#8230;</h2>
-                </section>
-
-                <section data-background="#336B87">
-                    <h2 class="part-conception-title">&lambda;-исчисление</h2>
-                </section>
-
-                <section>
-                    <div class="lambda-code">
-                        &nbsp;&lambda;x.x + 1
+                    <div class="quote-sign">
+                        кто-то из Яндекса
                     </div>
                 </section>
 
-                <section>
-                    <div class="lambda-code">
-                        (&lambda;x.x + 1) 6
+                <section data-background="#f6f6f6">
+                    <div class="reason-number">
+                        Во-первых
+                    </div>
+                    <div class="reason-text">
+                        Haskell <span class="exclamation">очень</span>
+                    </div>
+                    <div class="reason-text">
+                        сложный
                     </div>
                 </section>
 
                 <section>
-                    <div class="lambda-code">
-                        (&lambda;x.x + 1) 2 * 3
-                    </div>
-                </section>
-
-                <!-- Что делать с выражением? -->
-
-                <section>
-                    <div class="lambda-code">
-                        <span style="color: #bbb;">(&lambda;x.x + 1)</span> <strong>2 * 3</strong>
-                    </div>
-                </section>
-
-                <!-- Жадный подход -->
-
-                <section>
-                    <div class="lambda-code">
-                        <span style="color: #bbb;">(&lambda;x.x + 1)</span> <strong>6</strong><br/>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="lambda-code">
-                        <div style="padding-top: 117px;"></div>
-                        <span style="color: #bbb;">(&lambda;x.x + 1)</span><br/>
-                        &nbsp;&rArr;&nbsp;&nbsp;<strong>6</strong> + 1
-                    </div>
-                </section>
-
-                <section>
-                    <div style="padding-left: 15px;">
-                        <span class="big-text"><span class="red-text">Жадное</span> вычисление</span>
-                    </div>
-                    <div class="lambda-code">
-                        <div style="padding-top: 33px;"></div>
-                        <span style="color: #bbb;">(&lambda;x.x + 1)</span><br/>
-                        &nbsp;&rArr;&nbsp;&nbsp;<strong>6</strong> + 1
-                    </div>
-                </section>
-
-                <!-- Ленивый подход -->
-
-                <section>
-                    <div class="lambda-code">
-                        <span style="color: #bbb;">(&lambda;x.x + 1)</span> <strong>2 * 3</strong><br/>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="lambda-code">
-                        <div style="padding-top: 117px;"></div>
-                        <span style="color: #bbb;">(&lambda;x.x + 1)</span><br/>
-                        &nbsp;&rArr;&nbsp;&nbsp;(<strong>2 * 3</strong>) + 1
-                    </div>
-                </section>
-
-                <section>
-                    <div style="padding-left: 15px;">
-                        <span class="big-text"><span class="red-text">Ленивое</span> вычисление</span>
-                    </div>
-                    <div class="lambda-code">
-                        <div style="padding-top: 33px;"></div>
-                        <span style="color: #bbb;">(&lambda;x.x + 1)</span><br/>
-                        &nbsp;&rArr;&nbsp;&nbsp;(<strong>2 * 3</strong>) + 1
-                    </div>
-                </section>
-
-                <!-- Принципы -->
-
-                <section data-background="#336B87">
-                    <h2 class="part-conception-title">Киты</h2>
-                </section>
-
-                <!-- Как можно позже -->
-
-                <section data-background="#336B87">
-                    <h3 class="part-conception-title">
-                        <div class="num-light">1</div>
-                        <div class="num-text">Как можно позже</div>
-                     </h3>
-                </section>
-
-                <section>
-                    <pre><code class="haskell" data-trim>
-main =
-  let result = 2 `div` 0
-  in print result
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Ошибка</div>
-                </section>
-
-                <section>
-                    <pre><code class="haskell" data-trim>
-main =
-  let result = 2 `div` 0
-  in putStr "Bye!"
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Нет ошибки</div>
-                </section>
-
-                <!-- Как можно меньше -->
-
-                <section data-background="#336B87">
-                    <h3 class="part-conception-title">
-                        <div class="num-light">2</div>
-                        <div class="num-text">Как можно меньше</div>
-                    </h3>
-                </section>
-
-                <section>
-                    <pre><code class="haskell" data-trim>
-main =
-  let cx     = 2 / 6.054
-      nk     = 4 * 12.003
-      coeffs = [cx, nk]
-  in putStr "Nothing..."
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left" style="float: left;">Ничего</div>
-                    <div class="fragment">
-                        <div class="big-text text-right red-text" style="padding-right: 45px;">
-                            Thunk
-                        </div>
+                    <div style="text-align: center;">
+                        <img src="static/images/hw.jpg" width="700"/>
                     </div>
                 </section>
 
                 <section>
                     <pre><code class="haskell" data-trim>
-main =
-  let cx     = 2 / 6.054
-      nk     = 4 * 12.003
-      coeffs = [cx, nk]
-  in print $ length coeffs
+main = putStrLn "Hi, Saratov!"
                     </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left" style="float: left;">Только длина</div>
-                    <div class="fragment">
-                        <div class="big-text text-right red-text" style="padding-right: 45px;">
-                            WHNF
-                        </div>
+                </section>
+
+                <section>
+                    <pre><code class="bash" data-trim>
+$ stack new myproject simple
+$ cd myproject
+$ stack setup
+                    </code></pre>
+                </section>
+
+                <section>
+                    <pre><code class="haskell" data-trim style="font-size: 38px !important;">
+type ShopAPI = Get '[HTML] IndexPage
+  :<|> "order"  :> ReqBody '[FormUrlEncoded] Order
+                :> Post '[HTML] OrderPage
+  :<|> "static" :> Raw
+                    </code></pre>
+                </section>
+
+                <section data-background="#f6f6f6">
+                    <div class="reason-number">
+                        Во-вторых
+                    </div>
+                    <div class="reason-text">
+                        Haskell <span class="exclamation">не готов</span>
+                    </div>
+                    <div class="reason-text">
+                        к продакшену
                     </div>
                 </section>
 
-                <section>
-                    <pre><code class="haskell" data-trim>
-main =
-  let cx     = 2 / 6.054
-      nk     = 4 * 12.003
-      coeffs = [cx, nk]
-  in print $ coeffs !! 1
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left" style="float: left;">Только второй</div>
-                    <div class="fragment">
-                        <div class="big-text text-right red-text" style="padding-right: 45px;">
-                            WHNF
-                        </div>
+                <section data-background="#f6f6f6">
+                    <div class="packages-number">
+                        ≈4000
                     </div>
                 </section>
 
-                <section>
-                    <pre><code class="haskell" data-trim>
-main =
-  let cx     = 2 / 6.054
-      nk     = 4 * 12.003
-      coeffs = [cx, nk]
-  in print coeffs
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left" style="float: left;">Всё</div>
-                    <div class="fragment">
-                        <div class="big-text text-right red-text" style="padding-right: 45px;">
-                            Normal form
-                        </div>
+                <section data-background="#f6f6f6">
+                    <div class="editors">
                     </div>
                 </section>
 
-                <section data-background="#336B87">
-                    <h2 class="part-conception-title">Зачем это нам?</h2>
-                </section>
-
-                <!-- Плюсы -->
-
-                <section data-background="#336B87">
-                    <h3 class="part-conception-title">
-                        <div class="num-light">1</div>
-                        <div class="num-text">Рациональность</div>
-                    </h3>
-                </section>
-
-                <section>
-                    <pre><code class="haskell src-code src-code-small" data-trim>
-main =
-  let evens = [2, 4 .. 100]
-  in print $ take 10 evens
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Столько, сколько нужно</div>
-                </section>
-
-                <section data-background="#336B87">
-                    <h3 class="part-conception-title">
-                        <div class="num-light">2</div>
-                        <div class="num-text">Бесконечность</div>
-                    </h3>
-                </section>
-
-                <section>
-                    <pre><code class="haskell src-code src-code-small" data-trim>
-main =
-  let evens = [2, 4 ..]
-  in print $ take 10 evens
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Не более десяти</div>
-                </section>
-
-                <section data-background="#336B87">
-                    <h3 class="part-conception-title">
-                        <div class="num-light">3</div>
-                        <div class="num-text">EDSL</div>
-                    </h3>
-                </section>
-
-                <section>
-                    <pre><code class="haskell src-code src-code-small" data-trim>
-(?) :: Bool -> (a, a) -> a
-True  ? (f, _) = f
-False ? (_, s) = s
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Замена <strong><span class="code-inline">if</span></strong></div>
-                </section>
-
-                <section>
-                    <pre><code class="haskell src-code-small" data-trim>
-main = do
-  putStr "Input URL prefix: "
-  prefix <- getLine
-  (prefix == "https") ?
-    (putStr "Secure web!",
-     exitFailure)
-                    </code></pre>
-                </section>
-
-                <!-- Но... -->
-
-                <section data-background="#111" data-background-transition="convex">
-                    <h2 class="part-conception-title">Но&#8230;</h2>
-                </section>
-
-                <!-- Минус -->
-
-                <section data-background="#336B87">
-                    <h2 class="part-conception-title">
-                        <div class="num-light"><i class="fa fa-area-chart"></i></div>
-                        <div class="num-text">Space leak</div>
-                    </h2>
-                </section>
-
-                <section>
-                    <div class="bigger-text">Space leak <span class="red-text">&#8800;</span> Memory leak</div>
-                </section>
-
-                <section>
-                    <pre><code class="haskell src-code-small" data-trim>
-main =
-  let result = 2 `div` 0
-  in putStr "Bye!"
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Деления не было</div>
-                </section>
-
-                <section>
-                    <div class="big-text">
-                        И <span class="red-text">сколько</span> же будет<br/>
-                        отложенных выражений?
+                <section data-background="#f6f6f6">
+                    <div class="reason-number">
+                        И в-третьих
+                    </div>
+                    <div class="reason-text">
+                        Haskell <span class="exclamation">не позволяет</span>
+                    </div>
+                    <div class="reason-text">
+                        зарабатывать
                     </div>
                 </section>
 
-                <section>
-                    <pre><code class="haskell src-code-small" data-trim>
-bad :: Num b => [a] -> b -> b
-bad []     c = c
-bad (_:xs) c = bad xs $ c + 1
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Проблема</div>
-                </section>
-
-                <section>
-                    <pre><code class="bash src-code" data-trim>
-bad [1,2,3] 0
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Применяем&hellip;</div>
-                </section>
-
-                <section>
-                    <pre><code class="bash src-code" data-trim>
-bad 1:[2,3] 0 + 1
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Первый шаг&hellip;</div>
-                </section>
-
-                <section>
-                    <pre><code class="bash src-code" data-trim>
-bad 1:2:[3] (0 + 1) + 1
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Второй&hellip;</div>
-                </section>
-
-                <section>
-                    <pre><code class="bash src-code" data-trim>
-bad 1:2:3:[] ((0 + 1) + 1) + 1
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Третий и последний&hellip;</div>
-                </section>
-
-                <section>
-                    <pre><code class="bash src-code" data-trim>
-((0 + 1) + 1) + 1 = 3
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Вычисляем</div>
-                </section>
-
-                <section>
-                    <pre><code class="haskell src-code-small" data-trim>
-main =
-  print $ bad [1..50000000] 0
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="under-src-code-separator"></div>
-                    <div class="stat-wrapper">
-                        <span class="fragment big-text"><span class="stat-clock-icon"><i class="fa fa-clock-o"></i></span> <span style="padding-right: 41px;"></span><span class="red-text">63 с</span></span>
-
-                    <div class="english-separator"></div>
-
-                    <span class="fragment big-text"><span class="stat-memory-icon"><i class="fa fa-area-chart"></i></span> <span style="padding-right: 40px;"></span><span class="red-text">6.4 ГБ</span></span>
-                </section>
-
-                <!-- Что делать? -->
-
-                <section data-background="#336B87">
-                    <h2 class="part-conception-title">Что же делать?</h2>
-                </section>
-
-                <section data-background="#336B87">
-                    <h3 class="part-conception-title">
-                        <div class="num-light">1</div>
-                        <div class="num-text">Оптимизация</div>
-                     </h3>
-                </section>
-
-                <section class="big-text">
-					<table>
-						<thead>
-							<tr>
-								<th></th>
-								<th><span class="mono-opt">-O0</span></th>
-								<th><span class="mono-opt">-O2</span></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><span class="stat-clock-icon"><i class="fa fa-clock-o"></i></span></td>
-								<td><span class="red-text">63 c</span></td>
-								<td><span class="green-text">3.2 с</span></td>
-							<tr>
-							<tr>
-								<td><span class="stat-clock-icon"><i class="fa fa-area-chart"></i></span></td>
-								<td><span class="red-text">6.4 ГБ</span></td>
-								<td><span class="green-text">104 кБ</span></td>
-							<tr>
-						</tbody>
-					</table>
-				</section>
-
-                <section data-background="#336B87">
-                    <h3 class="part-conception-title">
-                        <div class="num-light">2</div>
-                        <div class="num-text">Ручками</div>
-                     </h3>
-                </section>
-
-                <section>
-                    <pre><code class="haskell src-code-small" data-trim>
-ok :: Num b => [a] -> b -> b
-ok []     c = c
-ok (_:xs) c = ok xs $! c + 1
-                    </code></pre>
-                    <div class="under-src-code-separator"></div>
-                    <div class="big-text text-left">Добавляем строгости</div>
-                </section>
-
-                <section class="big-text">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Лениво</th>
-                                <th>Строго</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="stat-clock-icon"><i class="fa fa-clock-o"></i></span></td>
-                                <td><span class="red-text">63 c</span></td>
-                                <td><span class="green-text">5.8 с</span></td>
-                            <tr>
-                            <tr>
-                                <td><span class="stat-clock-icon"><i class="fa fa-area-chart"></i></span></td>
-                                <td><span class="red-text">6.4 ГБ</span></td>
-                                <td><span class="green-text">182 кБ</span></td>
-                            <tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <!-- Итоги -->
-
-                <section data-background="#336B87">
-                    <h2 class="part-conception-title">Итак&#8230;</h2>
-                </section>
-
-                <section class="medium-text">
-                    <div style="padding-top: 35px;"></div>
-
-                    <div class="final-section-principles">
-                        <div class="final-section-principles-picture">
-                            <i class="fa fa-hand-o-right"></i>
-                        </div>
-                    </div>
-                    <div class="final-section-principles-text">
-                        Как можно позже<br/>
-                        Как можно меньше
-                    </div>
-
-                    <div style="padding-top: 70px;"></div>
-
-                    <div class="final-section-advantages">
-                        <div class="final-section-advantages-picture">
-                            <i class="fa fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="final-section-advantages-text">
-                        Рациональность<br/>
-                        Бесконечность<br/>
-                        EDSL
-                    </div>
-
-                    <div style="padding-top: 70px;"></div>
-
-                    <div class="final-section-disadvantages">
-                        <div class="final-section-disadvantages-picture">
-                            <i class="fa fa-minus"></i>
-                        </div>
-                    </div>
-                    <div class="final-section-disadvantages-text">
-                        Space leak
+                <section data-background="#f6f6f6">
+                    <div class="packages-number">
+                        64
                     </div>
                 </section>
 
-                <!-- Благодарю за внимание! -->
+                <section data-background="#f6f6f6" style="font-size: 140%;">
+                    <div>
+                        <span style="color: #aaa;">Раз</span>
+                        <span style="padding-right: 81px;"></span>
+                        Haskell <span class="exclamation">не очень</span> сложный
+                    </div>
 
-                <section data-background="#336B87">
-                    <div class="part-conception-title" style="font-size: 110px;">Благодарю!</div>
+                    <div style="padding-top: 40px;"></div>
 
-                    <div style="padding-top: 50px;"></div>
-
-                    <div class="medium-text" style="color: #dedede !important; padding-left: 13px;">
-                        Денис Шевченко &#149; <a href="http://dshevchenko.biz" style="color: #90AFC5;"> dshevchenko.biz</a>
+                    <div>
+                        <span style="color: #aaa;">Два</span>
+                        <span style="padding-right: 73px;"></span>
+                        Haskell <span class="exclamation">готов</span> к продакшену
+                    </div>
+                    
+                    <div style="padding-top: 40px;"></div>
+                    
+                    <div>
+                        <span style="color: #aaa;">И три</span>
+                        <span style="padding-right: 21px;"></span>
+                        Haskell <span class="exclamation">уже позволяет</span> зарабатывать
                     </div>
                 </section>
 
+                <section data-background="#eee" style="text-align: center;">
+                    <img src="static/images/logo_big.png" width="550"/>
+                    <div style="font-size: 80px; padding-top: 20px;">
+                        <a href="http://ruhaskell.org/">ruhaskell.org</a>
+                    </div>
+                </section>
             </div>
-
         </div>
 
         <script src="static/lib/js/head.min.js"></script>
