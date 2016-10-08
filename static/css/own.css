@@ -81,6 +81,20 @@
     text-align: right !important;
     color: #999 !important;
     font-size: 36px !important;
+    padding-top: 40px !important;
+}
+
+.to-make-it-easier {
+    font-size: 56px !important;
+}
+
+.you-can {
+    font-size: 56px !important;
+}
+
+.thanks {
+    font-size: 64px !important;
+    padding-bottom: 70px !important;
 }
 
 .reason-number {
@@ -94,7 +108,7 @@
 
 .packages-number {
     text-align: center !important;
-    font-size: 136px !important;
+    font-size: 156px !important;
 }
 
 .meetup-mark {
